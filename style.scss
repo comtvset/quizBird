@@ -1,14 +1,20 @@
 $bodyColor: rgb(36, 36, 36);
 
-html,
+html {
+	// background-color: rgb(0, 0, 0);
+	background-image: url(./assets/image/wallpaper2.jpg);
+	background-size: cover;
+}
+
 body {
 	font-size: 16px;
-	background: $bodyColor;
+	// background: $bodyColor;
+
 	margin: 0 auto;
 	text-align: center;
 	// border: 1px solid red;
 	// border-radius: 10px;
-	max-width: 800px;
+	max-width: 1100px;
 
 	font-family: 'Open Sans', sans-serif;
 	color: #dfdfdf;
@@ -37,29 +43,39 @@ button {                     /*<-- обнуление button */
 	overflow: hidden;
 	margin: 0 auto;
 	font-size: 17px;
-	color: #f8f8f9;
-	text-shadow: 0 1px 0 #252424;
+	// color: #f8f8f9;
+	// text-shadow: 0 1px 0 #252424;
+}
 
-	.mate:before {
-		content: "";
-		position: absolute;
-		background: inherit;
-		z-index: -1;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		box-shadow: inset 0 0 2000px rgb(117, 117, 117);
-		filter: blur(10px);
-		margin: -20px;
-	}
-  }
+@mixin mate-before {
+	content: "";
+	position: absolute;
+	background: inherit;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	box-shadow: inset 0 0 2000px rgb(20, 20, 20);
+	filter: blur(10px);
+	margin: -20px;
+}
 
+// .intro {
+// 	background-image: url(/assets/madia/songBirdGif.gif);
+// 	height: 500px;
+// 	width: 500px;
+// 	margin: 0 auto;
+// 	margin-top: 50%;
+// }
 
 
 //HEADER
 .header-container {
-
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 .header-el {
@@ -111,7 +127,7 @@ h1 {
 
 .lng-greetings-text {
 	margin: 1em 2em;
-	text-align: start;
+	// text-align: start;
 	font-size: 1.2em;
 	font-weight: 100;
 }
@@ -177,7 +193,7 @@ $speed: 0.5s;
 	  left: 0;
 	  opacity: 0;
 	  width: 100%;
-	  color: #323237;
+	  color: #035e61;
 	  display: block;
 	  transition: $speed;
 	  position: absolute;
@@ -196,7 +212,7 @@ $speed: 0.5s;
 	  line-height: 40px;
 	  transition: $speed;
 	  position: relative;
-	  background: #323237;
+	  background: #035e61;
 	  content: attr(data-play);
 	  transform: translateY(0) rotateX(0);
 	}
@@ -205,38 +221,52 @@ $speed: 0.5s;
 
 //games
 .no-game {
-	// display: none;
-	display: block;
+	display: none; //включить!
+	// display: block; //отключить!
 }
 
 .game {
-
+	display: block; //включить!
 }
 
 .question-container {
-	background-color: #8a8a8a;
+	@include mate();
+}
+
+.question-container:before {
+	@include mate-before();
+}
+
+
+.container {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
-	@include mate();
 }
 
 .question-pictures {
 	height: 10rem;
 	border-radius: 5px;
 	margin-right: 10px;
+	margin-left: 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .question-info-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 400px;
+	flex-grow: 2;
 }
 
 // -- player --
-
+.volume-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	margin: 20px 10px 20px 0px;
+}
 .volume {
 	border-radius: 5px;
 	height: 8px;
@@ -269,9 +299,17 @@ input[type=range]::-webkit-slider-thumb {
   }
 
 
-.audio {
-	border-radius: none;
-	background-color: rgb(59, 113, 158);
+.player {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	// width: 50px;
+}
+
+.progress-all {
+	width: 65%;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 .progress-container {
@@ -283,44 +321,100 @@ input[type=range]::-webkit-slider-thumb {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-  }
+}
 
-  .progress-container:hover {
+.progress-container:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
-  }
+}
 
-  .progress {
+.progress {
 	background: rgb(44, 44, 44);
 	box-shadow: 1px 1px 5px rgb(29, 29, 29);
 	border-radius: 5px;
 	height: 8px;
 	/* width: 150px; */
 	margin-left: 1px;
-  }
+}
 
-  .play-img {
-	height: 5rem;
-  }
+.play-img {
+	height: 4rem;
+	margin-left: 10px;
+}
 
-  .replay-img {
-	height: 5rem;
-  }
+.replay-img {
+	height: 4rem;
+	margin-right: 10px;
+}
 
+.time {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 10px;
+}
 
 
 
 .lng-question-title {
-	// display: flex;
-	// justify-content: start;
 	margin-top: 20px;
 	font-size: 35px;
+	text-align: start;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.species {
+	text-align: start;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.lng-description {
+	margin: 20px;
+	text-align: start;
+	font-weight: 100;
 }
 
 .wrapper-middle {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-between;
+	// flex-wrap: wrap;
 }
+
+.choice-container {
+	text-align: start;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	@include mate();
+	margin-top: 20px;
+	margin-right: 10px;
+	// flex-grow: 1;
+}
+
+.choice-container::before {
+	@include mate-before();
+}
+
+.choice-text {
+	margin: 20px;
+}
+.ch-text {
+	margin-left: 20px;
+}
+
+.answer-container {
+	@include mate();
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.answer-container::before {
+	@include mate-before();
+}
+
+
 
 //FOOTER
 .footer-container {

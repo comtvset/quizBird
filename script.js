@@ -1,13 +1,24 @@
+import { mapArray, mapObject } from './modules/functions.js';
+import birdsData from './modules/birds.js';
+import translate from './translate.js';
+
 const body = document.querySelector('body');
 const header = document.createElement('header');
 const main = document.createElement('main');
 const footer = document.createElement('footer');
 
+// console.log(mapArray(birdsData[1], 'id'));
+// console.log(mapObject(birdsData[1], 'id'));
 
 //BODY
 body.appendChild(header);
 body.appendChild(main);
 body.appendChild(footer);
+
+
+body.className = 'body';
+main.className = 'main';
+footer.className = 'footer';
 
 //HEADER
 header.className = 'header';
@@ -22,11 +33,11 @@ logoContainer.className = 'logo-container';
 const logoBird = document.createElement('img');
 logoContainer.appendChild(logoBird);
 logoBird.className = 'logo-bird';
-logoBird.setAttribute('src', '/assets/icon/logo_bird_c.png');
+logoBird.setAttribute('src', './assets/icon/logo_bird_c.png');
 logoBird.setAttribute('alt', 'logo');
 
 const headerEl = document.createElement('div');
-logoContainer.appendChild(headerEl);
+headerContainer.appendChild(headerEl);
 headerEl.className = 'header-el';
 
 const score = document.createElement('div');
@@ -49,45 +60,45 @@ const greetings = document.createElement('div');
 mainContainer.appendChild(greetings);
 greetings.className = 'greetings';
 
-// const greetingsHead = document.createElement('h1');
-// greetingsHead.textContent = 'Welcome!';
-// greetings.appendChild(greetingsHead);
-// greetingsHead.className = 'lng-greetings-head';
+const greetingsHead = document.createElement('h1');
+greetingsHead.textContent = 'Welcome!';
+greetings.appendChild(greetingsHead);
+greetingsHead.className = 'lng-greetings-head';
 
-// const greetingsText = document.createElement('div');
-// greetingsText.textContent = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati eaque officiis perspiciatis pariatur, debitis cum temporibus, exercitationem tempora fugit modi, laborum ipsam provident sed. Laborum facilis non neque soluta eaque.';
-// greetings.appendChild(greetingsText);
-// greetingsText.className = 'lng-greetings-text';
+const greetingsText = document.createElement('div');
+greetingsText.textContent = 'UPS.....';
+greetings.appendChild(greetingsText);
+greetingsText.className = 'lng-greetings-text';
 
-// const langContainer = document.createElement('div');
-// greetings.appendChild(langContainer);
-// langContainer.className = 'lang-container';
+const langContainer = document.createElement('div');
+greetings.appendChild(langContainer);
+langContainer.className = 'lang-container';
 
-// const langText = document.createElement('div');
-// langText.textContent = 'language';
-// langContainer.appendChild(langText);
-// langText.className = 'lng-lang-text';
+const langText = document.createElement('div');
+langText.textContent = 'language';
+langContainer.appendChild(langText);
+langText.className = 'lng-lang-text';
 
-// const langSelect = document.createElement('select');
-// langContainer.appendChild(langSelect);
-// langSelect.className = 'lang-select';
+const langSelect = document.createElement('select');
+langContainer.appendChild(langSelect);
+langSelect.className = 'lang-select';
 
-// const langOptionEN = document.createElement('option');
-// langSelect.appendChild(langOptionEN);
-// langOptionEN.setAttribute('value', 'en');
-// langOptionEN.textContent = 'EN'
+const langOptionEN = document.createElement('option');
+langSelect.appendChild(langOptionEN);
+langOptionEN.setAttribute('value', 'en');
+langOptionEN.textContent = 'EN'
 
-// const langOptionRU = document.createElement('option');
-// langSelect.appendChild(langOptionRU);
-// langOptionRU.setAttribute('value', 'ru');
-// langOptionRU.textContent = 'RU'
+const langOptionRU = document.createElement('option');
+langSelect.appendChild(langOptionRU);
+langOptionRU.setAttribute('value', 'ru');
+langOptionRU.textContent = 'RU'
 
 
-// const playGame = document.createElement('a');
-// greetings.appendChild(playGame);
-// playGame.className = 'btn-flip';
-// playGame.setAttribute('data-play', 'Play');
-// playGame.setAttribute('data-go', 'Let\'s go');
+const playGame = document.createElement('a');
+greetings.appendChild(playGame);
+playGame.className = 'btn-flip';
+playGame.setAttribute('data-play', 'Play');
+playGame.setAttribute('data-go', 'Let\'s go');
 
 
 //game
@@ -99,84 +110,11 @@ const questionContainer = document.createElement('div');
 game.appendChild(questionContainer);
 questionContainer.className = 'question-container';
 
-const questionPictures = document.createElement('img');
-questionContainer.appendChild(questionPictures);
-questionPictures.className = 'question-pictures';
-questionPictures.setAttribute('src', 'https://live.staticflickr.com//65535//49298804222_474cfe8682.jpg')
-
-const questionInfoContainer = document.createElement('div');
-questionContainer.appendChild(questionInfoContainer);
-questionInfoContainer.className = 'question-info-container';
-
-const questionTitle = document.createElement('div');
-questionTitle.textContent = '******';
-questionInfoContainer.appendChild(questionTitle);
-questionTitle.className = 'lng-question-title';
+let player = new Player(questionContainer);
 
 
-// -- player --
-const questionPlayer = document.createElement('audio');
-questionInfoContainer.appendChild(questionPlayer);
-questionPlayer.className = 'audio';
-questionPlayer.setAttribute('src', 'https://www.xeno-canto.org/sounds/uploaded/XIQVMQVUPP/XC518684-Grands%20corbeaux%2009012020%20Suzon.mp3');
-// questionPlayer.setAttribute('controls', 'controls')
 
-const progressContainer = document.createElement('div');
-questionInfoContainer.appendChild(progressContainer);
-progressContainer.className = 'progress-container';
-
-const progress = document.createElement('div');
-progressContainer.appendChild(progress);
-progress.className = 'progress';
-
-const time = document.createElement('div');
-questionInfoContainer.appendChild(time);
-time.className = 'time';
-
-const timeProgress = document.createElement('div');
-time.appendChild(timeProgress);
-timeProgress.textContent = '00:00';
-timeProgress.className = 'time-progress';
-
-const timeFull = document.createElement('div');
-time.appendChild(timeFull);
-timeFull.textContent = '01:20';
-timeFull.className = 'time-full';
-
-const controls = document.createElement('div');
-questionInfoContainer.appendChild(controls);
-controls.className = 'controls';
-
-const play = document.createElement('button');
-controls.appendChild(play);
-play.className = 'play';
-
-const replay = document.createElement('button');
-controls.appendChild(replay);
-replay.className = 'replay';
-
-const playIMG = document.createElement('img');
-play.appendChild(playIMG);
-playIMG.className = 'play-img';
-playIMG.setAttribute('src', '/assets/icon/play.png');
-playIMG.setAttribute('alt', 'play');
-
-const replayIMG = document.createElement('img');
-replay.appendChild(replayIMG);
-replayIMG.className = 'replay-img';
-replayIMG.setAttribute('src', '/assets/icon/replay.png');
-replayIMG.setAttribute('alt', 'replay');
-
-const volume = document.createElement('input');
-questionInfoContainer.appendChild(volume);
-volume.className = 'volume';
-// volume.setAttribute('value', '#ff0000');
-volume.setAttribute('type', 'range');
-volume.setAttribute('min', '0');
-volume.setAttribute('max', '100');
-
-
-// -- --
+// -- choice --
 
 const wrapperMiddle = document.createElement('div');
 game.appendChild(wrapperMiddle);
@@ -184,19 +122,51 @@ wrapperMiddle.className = 'wrapper-middle';
 
 
 const choiceContainer = document.createElement('div');
-choiceContainer.textContent = 'choice-container';
+// choiceContainer.textContent = 'choice-container';
 wrapperMiddle.appendChild(choiceContainer);
 choiceContainer.className = 'choice-container';
 
+
+class Choice {
+    constructor(name) {
+        const choiceText = document.createElement('div');
+        choiceContainer.appendChild(choiceText);
+        choiceText.className = 'choice-text';
+
+        const choice = document.createElement('input');
+        choiceText.appendChild(choice);
+        choice.className = 'choice';
+        choice.setAttribute('type', 'radio');
+        choice.setAttribute('name', 'choice');
+
+        const ch = document.createElement('span');
+        this.ch;
+        ch.textContent = name;
+        choiceText.appendChild(ch);
+        ch.className = 'ch-text';
+    }
+}
+
+let ch1 = new Choice('Ворон');
+let ch2 = new Choice('Журавль');
+let ch3 = new Choice('Ласточка');
+let ch4 = new Choice('Орел');
+let ch5 = new Choice('Пингвин');
+let ch6 = new Choice('Курица');
+
+
 const answerContainer = document.createElement('div');
-answerContainer.textContent = 'answer-container';
 wrapperMiddle.appendChild(answerContainer);
 answerContainer.className = 'answer-container';
 
-const next = document.createElement('div');
-next.textContent = 'next';
+let player2 = new Player(answerContainer);
+
+
+const next = document.createElement('a');
 game.appendChild(next);
-next.className = 'next';
+next.className = 'btn-flip';
+next.setAttribute('data-play', 'Next');
+next.setAttribute('data-go', 'Click');
 
 
 //FOOTER
@@ -212,7 +182,7 @@ const gitIcon = document.createElement('img');
 gitHub.appendChild(gitIcon);
 gitIcon.className = 'footer-el';
 gitIcon.classList.add('size-icon32');
-gitIcon.setAttribute('src', '/assets/icon/GitHub-Mark-32px(white).png');
+gitIcon.setAttribute('src', './assets/icon/GitHub-Mark-32px(white).png');
 gitIcon.setAttribute('alt', 'github');
 
 
@@ -222,8 +192,12 @@ school.setAttribute('href', 'https://rs.school/js');
 const schoolIcon = document.createElement('img');
 school.appendChild(schoolIcon);
 schoolIcon.className = 'footer-el';
-schoolIcon.setAttribute('src', '/assets/icon/rs_school_js.png');
+schoolIcon.setAttribute('src', './assets/icon/rs_school_js.png');
 schoolIcon.setAttribute('alt', 'rs_school');
+
+const intro = document.createElement('div');
+body.appendChild(intro);
+intro.className = 'intro';
 
 
 //language
@@ -252,7 +226,18 @@ function changeLang() {
 
 changeLang();
 
-play.addEventListener('click', () => {
+
+next.addEventListener('click', () => {
+    header.classList.add('no-greetings');
+    main.classList.add('no-greetings');
+    footer.classList.add('no-greetings');
+
+});
+
+
+playGame.addEventListener('click', () => {
     greetings.classList.add('no-greetings');
     game.classList.add('game');
-  });
+});
+
+// alert('Привет! Прошу проверить работу в последний день Deadline. Функционал в процессе разработки')
