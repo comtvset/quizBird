@@ -1,6 +1,8 @@
-import { mapArray, mapObject } from './modules/functions.js';
-import birdsData from './modules/birds.js';
+// import { mapArray, mapObject } from './modules/functions.js';
+// import birdsData from './modules/birds.js';
 import translate from './translate.js';
+// import mapObject from './modules/testFunc.js';
+import {Player} from './player.js';
 
 const body = document.querySelector('body');
 const header = document.createElement('header');
@@ -9,6 +11,17 @@ const footer = document.createElement('footer');
 
 // console.log(mapArray(birdsData[1], 'id'));
 // console.log(mapObject(birdsData[1], 'id'));
+
+function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
+
+window.randA = randomInteger(0, 5);
+window.randB = randomInteger(0, 5);
+console.log(randA)
+console.log(randB)
 
 //BODY
 body.appendChild(header);
@@ -239,5 +252,8 @@ playGame.addEventListener('click', () => {
     greetings.classList.add('no-greetings');
     game.classList.add('game');
 });
+
+
+
 
 // alert('Привет! Прошу проверить работу в последний день Deadline. Функционал в процессе разработки')

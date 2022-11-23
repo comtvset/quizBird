@@ -1,7 +1,11 @@
-// import { mapArray, mapObject } from './modules/functions.js';
-// import birdsData from './modules/birds.js';
+import { mapArray, mapObject } from './modules/functions.js';
+import birdsData from './modules/birds.js';
+// let mapObject = import('./modules/functions.js');
+// let birdsData = import('./modules/birds.js');
 
-class Player {
+
+
+export class Player {
   constructor(classA) {
 
     this.classA = classA;
@@ -13,24 +17,19 @@ class Player {
     const questionPictures = document.createElement('img');
     container.appendChild(questionPictures);
     questionPictures.className = 'question-pictures';
-    questionPictures.setAttribute(
-      'src',
-      'https://live.staticflickr.com//65535//49298804222_474cfe8682.jpg'
-    );
+    // questionPictures.setAttribute(
+    //   'src',
+    //   'https://live.staticflickr.com//65535//49298804222_474cfe8682.jpg'
+    // );
 
     const questionInfoContainer = document.createElement('div');
     container.appendChild(questionInfoContainer);
     questionInfoContainer.className = 'question-info-container';
 
 
-    // console.log(mapObject(birdsData[1], 'id'));
-
-
-
-
-
     const questionTitle = document.createElement('div');
-    questionTitle.textContent = 'Crow';
+
+    // questionTitle.textContent = 'Crow';
     questionInfoContainer.appendChild(questionTitle);
     questionTitle.className = 'lng-question-title';
 
@@ -61,6 +60,8 @@ class Player {
       'src',
       'https://www.xeno-canto.org/sounds/uploaded/XIQVMQVUPP/XC518684-Grands%20corbeaux%2009012020%20Suzon.mp3'
     );
+
+
 
     const progressAll = document.createElement('div');
     player.appendChild(progressAll);
@@ -105,14 +106,48 @@ class Player {
     const volume = document.createElement('input');
     volumeContainer.appendChild(volume);
     volume.className = 'volume';
-    // volume.setAttribute('value', '#ff0000');
     volume.setAttribute('type', 'range');
     volume.setAttribute('min', '0');
     volume.setAttribute('max', '100');
 
     const description = document.createElement('p');
-    description.textContent = 'Ворон – крупная птица. Длина тела достигает 70 сантиметров, размах крыльев – до полутора метров. Вороны населяют окрестности Тауэра. В Англии бытует поверье, что в день, когда черные вороны улетят от Тауэра, монархия рухнет.';
+    // description.textContent = 'Ворон – крупная птица. Длина тела достигает 70 сантиметров, размах крыльев – до полутора метров. Вороны населяют окрестности Тауэра. В Англии бытует поверье, что в день, когда черные вороны улетят от Тауэра, монархия рухнет.';
     classA.appendChild(description);
     description.className = 'lng-description';
+
+
+
+
+       // console.log(mapObject(birdsData[1], 'name'));
+    // console.log(mapArray(birdsData[1], 'name'));
+
+    let nameA = mapArray(birdsData[randA], 'name');
+    let speciesA = mapArray(birdsData[randA], 'species');
+    let descriptionA = mapArray(birdsData[randA], 'description');
+    let imageA = mapArray(birdsData[randA], 'image');
+    let audioA = mapArray(birdsData[randA], 'audio');
+  //   for (let i = 0; i < test.length; i++) {
+  //     console.log(`[elem with index ${i}] is ${test[i]}`);
+  // }
+    questionTitle.textContent = nameA[randB];
+    species.textContent = speciesA[randB];
+    description.textContent = descriptionA[randB];
+    questionPictures.setAttribute(
+        'src',
+        imageA[randB]
+      );
+    questionPlayer.setAttribute(
+      'src',
+      audioA[randB]
+    );
+
+    function playSong() {
+      questionPlayer.play()
+    }
+
+    playIMG.addEventListener('click', () => {
+      playSong()
+    })
+
   }
 }
