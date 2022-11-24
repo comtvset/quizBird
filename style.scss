@@ -156,7 +156,11 @@ h1 {
 option{
 	color:rgb(2, 2, 2);
 	background: inherit;
-  }
+}
+
+.btn-flip-disable {
+	cursor: not-allowed;
+}
 
 $speed: 0.5s;
 
@@ -173,7 +177,7 @@ $speed: 0.5s;
 	text-decoration: none;
 	text-transform: uppercase;
 	width: 200px;
-	cursor: pointer;
+	// cursor: pointer;
 
 	&:hover{
 
@@ -391,6 +395,7 @@ input[type=range]::-webkit-slider-thumb {
 	margin-top: 20px;
 	margin-right: 10px;
 	// flex-grow: 1;
+	height: 358px;
 }
 
 .choice-container::before {
@@ -408,9 +413,25 @@ input[type=range]::-webkit-slider-thumb {
 	@include mate();
 	margin-top: 20px;
 	margin-left: 10px;
+	height: 358px;
 }
 
 .answer-container::before {
+	@include mate-before();
+}
+
+.lng-listen-text {
+	@include mate();
+	margin-top: 20px;
+	margin-left: 10px;
+	height: 358px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.lng-listen-text::before {
 	@include mate-before();
 }
 

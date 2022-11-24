@@ -1,5 +1,6 @@
 // import { mapArray, mapObject } from './modules/functions.js';
-// import birdsData from './modules/birds.js';
+import birdsData from './modules/birds.js';
+import birdsDataEn from './modules/birds-en.js';
 import translate from './translate.js';
 // import mapObject from './modules/testFunc.js';
 import {Player} from './player.js';
@@ -20,8 +21,8 @@ function randomInteger(min, max) {
 
 window.randA = randomInteger(0, 5);
 window.randB = randomInteger(0, 5);
-console.log(randA)
-console.log(randB)
+// console.log(randA)
+// console.log(randB)
 
 //BODY
 body.appendChild(header);
@@ -141,7 +142,7 @@ choiceContainer.className = 'choice-container';
 
 
 class Choice {
-    constructor(name) {
+    constructor(name,ps) {
         const choiceText = document.createElement('div');
         choiceContainer.appendChild(choiceText);
         choiceText.className = 'choice-text';
@@ -157,20 +158,31 @@ class Choice {
         ch.textContent = name;
         choiceText.appendChild(ch);
         ch.className = 'ch-text';
+        // добавил id для более легкого доступа и последующей смены названий птиц для выбора
+        ch.setAttribute('id', 'choice'+ps);
+        // Событие на клик, когда выбирается один из вариантов ответа
+        choice.onclick=ChoiceDone;
+        // Тут сохраняется номер птицы в списке, чтобы потом можно было легко в обработчике
+        // клика узнать по какой именно птице кликнули
+        choice.dataset['ps']=ps;
     }
 }
-
-let ch1 = new Choice('Ворон');
-let ch2 = new Choice('Журавль');
-let ch3 = new Choice('Ласточка');
-let ch4 = new Choice('Орел');
-let ch5 = new Choice('Пингвин');
-let ch6 = new Choice('Курица');
+// Тут передаю еще и номер птицы в списке
+let ch1 = new Choice('Ворон',1);
+let ch2 = new Choice('Журавль',2);
+let ch3 = new Choice('Ласточка',3);
+let ch4 = new Choice('Орел',4);
+let ch5 = new Choice('Пингвин',5);
+let ch6 = new Choice('Курица',6);
 
 
 const answerContainer = document.createElement('div');
 wrapperMiddle.appendChild(answerContainer);
 answerContainer.className = 'answer-container';
+const listenText = document.createElement('p');
+wrapperMiddle.appendChild(listenText);
+listenText.className = 'lng-listen-text';
+listenText.innerText = 'Послушайте плеер. Выберите птицу из списка';
 
 let player2 = new Player(answerContainer);
 
@@ -216,6 +228,8 @@ intro.className = 'intro';
 //language
 const allLang = ['en', 'ru'];
 
+let data;
+
 langSelect.addEventListener('change', changeURLLang);
 function changeURLLang() {
     let lang = langSelect.value;
@@ -235,17 +249,22 @@ function changeLang() {
     for(let key in translate) {
         document.querySelector('.lng-' + key).textContent = translate[key][hash];
     }
+    if(langSelect.value == 'en') {
+        data = birdsDataEn;
+    }
+    else {data = birdsData;}
+
 }
 
 changeLang();
 
 
-next.addEventListener('click', () => {
-    header.classList.add('no-greetings');
-    main.classList.add('no-greetings');
-    footer.classList.add('no-greetings');
+// next.addEventListener('click', () => {
+//     header.classList.add('no-greetings');
+//     main.classList.add('no-greetings');
+//     footer.classList.add('no-greetings');
 
-});
+// });
 
 
 playGame.addEventListener('click', () => {
@@ -253,6 +272,107 @@ playGame.addEventListener('click', () => {
     game.classList.add('game');
 });
 
+
+// Дальше пошел мой код
+
+let TopPlayerAudio;
+let TopPlayerImage;
+let TopPlayerTitle;
+let TopPlayerDiscription;
+let RightPlayerAudio;
+let RightPlayerImage;
+let RightPlayerTitle;
+let RightPlayerDiscription;
+let step=0;
+let ps;
+let rd = 1;
+
+NextStep();
+
+function NextStep(){// Очередной шаг игры
+  document.querySelector(".question-pictures").src="./assets/icon/songBirdQuestion.png"; // тут поставить картинку неизвестной птицы
+  document.querySelector(".lng-question-title").textContent = '*******';
+  document.querySelector(".species").textContent = '';
+  console.log(ps=Math.round(Math.random()*data[step].length)); // ?????? выбираем случайную птицу из группы
+  TopPlayerAudio=document.querySelector(".question-info-container .audio");
+  TopPlayerAudio.src=data[step][ps].audio; // даем верхнему плееру голос этой птицы
+  // прячем правый плеер. Тут в оригинале оно не полностью прячется, можешь допилить на свой вкус
+  document.querySelector(".answer-container").style.display = "none";
+  document.querySelector(".lng-listen-text").style.display = "flex";
+  document.querySelector(".lng-listen-text").style.display = "listen-text";
+  // заполняем список вариантов для ответа названиями птиц этого шага.
+  document.querySelector("#choice1").textContent = data[step][0].name;
+  document.querySelector("#choice2").textContent = data[step][1].name;
+  document.querySelector("#choice3").textContent = data[step][2].name;
+  document.querySelector("#choice4").textContent = data[step][3].name;
+  document.querySelector("#choice5").textContent = data[step][4].name;
+  document.querySelector("#choice6").textContent = data[step][5].name;
+  round.textContent = `round: ${rd++}`;
+}
+
+function ChoiceDone(){ // вызывается при выборе варианта ответа
+  // останавливаем верхний плеер, нужно наверное и картинку на кнопке менять
+  // на паузу, оставлю это тебе'
+//   TopPlayerAudio.pause();
+
+  document.querySelector(".lng-listen-text").style.display = "none";
+  RightPlayerAudio=document.querySelector(".answer-container .audio");
+  RightPlayerImage=document.querySelector(".answer-container .question-pictures");
+  RightPlayerTitle=document.querySelector(".answer-container .lng-question-title");
+  RightPlayerDiscription=document.querySelector(".answer-container .lng-description");
+
+  TopPlayerImage=document.querySelector(".question-container .question-pictures");
+  TopPlayerTitle=document.querySelector(".question-container .lng-question-title");
+  TopPlayerDiscription=document.querySelector(".question-container .lng-description");
+  // тут узнаем номер выбранного варианта ответа
+  let choiceps=this.dataset['ps']-1;
+  if (choiceps!=ps){ // выбран неправильный ответ
+    // отображаем правый плеер
+    document.querySelector(".answer-container").style.display = "block";
+    // подставляем правому плееру голос выбранной пользователем птицы
+    // нужно еще наверное добавить ее название, описание и т.п.
+    RightPlayerAudio.src=data[step][choiceps].audio;
+    RightPlayerImage.src=data[step][choiceps].image;
+    RightPlayerTitle.textContent=data[step][choiceps].name;
+    RightPlayerDiscription.textContent=data[step][choiceps].description;
+    next.classList.add('btn-flip-disable');
+  }
+  else if(choiceps==ps){// выбран правильный ответ
+    // Переходим к следующему шагу и списку птиц. Если делать как в примере,
+    // то тут должна становиться доступной кнопка NEXT и только по ее нажатию
+    // переход дальше. Но чтото у тебя кнопка какаято хитровыебанная и я не понял
+    // с ходу как она у  тебя работает :) Поэтому сделал переход сразу.
+
+    document.querySelector(".answer-container").style.display = "block";
+    RightPlayerAudio.src=data[step][choiceps].audio;
+    RightPlayerImage.src=data[step][choiceps].image;
+    RightPlayerTitle.textContent=data[step][choiceps].name;
+    RightPlayerDiscription.textContent=data[step][choiceps].description;
+
+    TopPlayerImage.src=data[step][choiceps].image;
+    TopPlayerTitle.textContent=data[step][choiceps].name;
+    TopPlayerDiscription.textContent=data[step][choiceps].description;
+    next.classList.remove('btn-flip-disable');
+
+    // step++;
+
+    next.addEventListener('click', () => {
+        step++;
+        NextStep();
+      })
+
+    // К следующему шагу переходим только если еще не все птицы пройдены.
+    // Если все пройдены, то я не знаю что делать, можешь добавить какие-то действия
+    // в else
+    // if(step<birdsData.length)
+    //   NextStep();
+
+    // if(step >= birdsData.length-1)
+    //   NextStep();
+  }
+//   else if(step<birdsData.length)
+//       NextStep();
+}
 
 
 

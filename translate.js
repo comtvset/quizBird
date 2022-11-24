@@ -19,6 +19,10 @@ const translate = {
       'en': 'language',
       'ru': 'язык'
     },
+    'listen-text': {
+      'en': 'Listen to the player. Select a bird from the list',
+      'ru': 'Послушайте плеер. Выберите птицу из списка'
+    },
     // 'question-title': {
     //   'en': 'crow',
     //   'ru': 'ворон'
